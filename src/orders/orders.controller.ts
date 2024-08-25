@@ -9,7 +9,8 @@ export class OrdersController {
 
   @MessagePattern('createOrder')
   create(@Payload() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+    // return this.ordersService.create(createOrderDto);
+    return createOrderDto;
   }
 
   @MessagePattern('findAllOrders')
