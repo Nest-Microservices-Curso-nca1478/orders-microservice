@@ -7,6 +7,9 @@ interface EnvVars {
   HOST: string;
   RETRYATTEMPTS: number;
   RETRYDELAY: number;
+
+  PRODUCTS_MICROSERVICE_HOST: string;
+  PRODUCTS_MICROSERVICE_PORT: number;
 }
 
 const envsSchema = joi
@@ -16,6 +19,9 @@ const envsSchema = joi
     HOST: joi.string().required(),
     RETRYATTEMPTS: joi.number(),
     RETRYDELAY: joi.number(),
+
+    PRODUCTS_MICROSERVICE_HOST: joi.string().required(),
+    PRODUCTS_MICROSERVICE_PORT: joi.number().required(),
   })
   .unknown(true);
 
@@ -33,4 +39,7 @@ export const envs = {
   host: envVars.HOST,
   retryAttempts: envVars.RETRYATTEMPTS,
   retryDelay: envVars.RETRYDELAY,
+
+  productsMicroserviceHost: envVars.PRODUCTS_MICROSERVICE_HOST,
+  productsMicroservicePort: envVars.PRODUCTS_MICROSERVICE_PORT,
 };
