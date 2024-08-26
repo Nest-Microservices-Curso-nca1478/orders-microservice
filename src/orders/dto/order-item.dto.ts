@@ -1,4 +1,4 @@
-import { IsNumber, IsPositive } from 'class-validator';
+import { IsNumber, IsOptional, IsPositive } from 'class-validator';
 
 export class OrderItemDto {
   @IsNumber()
@@ -11,5 +11,6 @@ export class OrderItemDto {
 
   @IsNumber()
   @IsPositive()
+  @IsOptional()
   price: number;
 }
