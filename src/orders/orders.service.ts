@@ -66,16 +66,31 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
             },
           },
         },
+        include: {
+          OrderItem: {
+            select: {
+              id: true,
+              price: true,
+              quantity: true,
+              productId: true,
+            },
+          },
+        },
       });
 
-      return order;
+      return {
+        ...order,
+        OrderItem: order.OrderItem.map((orderItem) => {
+          return {
+            ...orderItem,
+            name: products.find((product) => product.id === orderItem.productId)
+              .name,
+          };
+        }),
+      };
     } catch (error) {
       throw new RpcException(error);
     }
-
-    // return this.order.create({
-    //   data: createOrderDto,
-    // });
   }
 
   async findAll(paginationOrderDto: PaginationOrderDto) {
