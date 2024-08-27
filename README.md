@@ -16,4 +16,5 @@
 3. Crear un archivo `.env` basado en el `.env.template`.
 4. Crear la db con `docker compose up -d`
 5. Ejecutar migración de prisma: `npx prisma migrate dev`.
-6. Ejecutar `npm run start:dev`.
+6. Levantar el servidor de NATS `docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats`
+7. Ejecutar `npm run start:dev`.
