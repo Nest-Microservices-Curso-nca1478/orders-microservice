@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { ChangeStatusOrderDto, PaginationOrderDto } from './dto';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { NATS_SERVICE } from '../config';
+import { OrderWithProducts } from './interfaces/order-with-products.interface';
 
 @Injectable()
 export class OrdersService extends PrismaClient implements OnModuleInit {
@@ -172,5 +173,21 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
       where: { id },
       data: { status },
     });
+  }
+
+  async createPaymentSession(order: OrderWithProducts) {
+    const paymentSession = await firstValueFrom(
+      this.client.send('create.payment.session', {
+        orderId: order.id,
+        currency: 'usd',
+        items: order.OrderItem.map((orderItem) => ({
+          name: orderItem.name,
+          price: orderItem.price,
+          quantity: orderItem.quantity,
+        })),
+      }),
+    );
+
+    return paymentSession;
   }
 }
